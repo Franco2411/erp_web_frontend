@@ -1,6 +1,7 @@
+import './assets/base.css' // <-- Nuestra nueva matriz de diseño
+
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-
 import App from './App.vue'
 import router from './router'
 

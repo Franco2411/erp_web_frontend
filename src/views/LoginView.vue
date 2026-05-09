@@ -1,14 +1,28 @@
 <script setup>
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useAuthStore } from '../stores/auth'
 
-// Estas variables reactivas van a atrapar lo que el usuario escriba
+const router = useRouter()
+const authStore = useAuthStore()
+
 const username = ref('')
 const password = ref('')
+const errorMessage = ref('') // Para mostrar si hay error
 
-// Esta es la función que se dispara al apretar el botón
-const handleLogin = () => {
-  console.log("Intentando iniciar sesión con el usuario:", username.value)
-  // Acá conectaremos los cables con FastAPI en el próximo paso
+const handleLogin = async () => {
+  errorMessage.value = '' // Limpiamos errores previos
+  
+  // Llamamos a la función de nuestro almacén
+  const result = await authStore.login(username.value, password.value)
+  
+  if (result.success) {
+    // Si el backend nos dio luz verde, lo mandamos al panel
+    router.push('/dashboard')
+  } else {
+    // Si falló, mostramos el error
+    errorMessage.value = result.error
+  }
 }
 </script>
 
@@ -29,50 +43,62 @@ const handleLogin = () => {
         <input type="password" v-model="password" required>
       </div>
       
+      <p v-if="errorMessage" style="color: red; font-size: 0.85rem; margin-bottom: 10px;">{{ errorMessage }}</p>
+
       <button type="submit">Ingresar</button>
     </form>
   </div>
 </template>
 
 <style scoped>
-/* Un diseño rápido para que parezca un sistema real */
 .login-container {
   max-width: 350px;
-  margin: 100px auto;
-  padding: 30px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-  font-family: sans-serif;
+  /* Centrado vertical y horizontal básico */
+  margin: 10vh auto; 
+  padding: var(--spacing-lg);
+  
+  /* Usamos los colores y bordes del sistema */
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05); /* Sombrita sutil */
 }
+
 h2 {
   text-align: center;
-  margin-bottom: 20px;
-  color: #333;
+  margin-bottom: var(--spacing-lg);
+  color: var(--color-primary);
 }
+
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: var(--spacing-md);
   display: flex;
   flex-direction: column;
 }
-input {
-  padding: 10px;
-  margin-top: 5px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+
+label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  margin-bottom: var(--spacing-sm);
 }
+
+input {
+  /* El ancho y padding ya vienen del base.css */
+  width: 100%;
+}
+
 button {
   width: 100%;
   padding: 12px;
-  margin-top: 10px;
-  background-color: #2c3e50;
+  margin-top: var(--spacing-sm);
+  background-color: var(--color-primary);
   color: white;
   border: none;
-  border-radius: 4px;
-  cursor: pointer;
   font-weight: bold;
 }
+
 button:hover {
-  background-color: #1a252f;
+  background-color: var(--color-primary-hover);
 }
 </style>

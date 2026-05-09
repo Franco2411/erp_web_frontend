@@ -1,0 +1,58 @@
+/* ==========================================
+   SISTEMA DE DISEÑO - VARIABLES GLOBALES
+   ========================================== */
+:root {
+  /* Paleta de Colores (Estilo Industrial/Limpio) */
+  --color-primary: #2c3e50;      /* Azul oscuro para botones y cabeceras */
+  --color-primary-hover: #1a252f; /* Azul más oscuro para cuando pasas el mouse */
+  --color-secondary: #e67e22;    /* Naranja para alertas o botones secundarios */
+  --color-background: #f4f6f8;   /* Gris súper claro para el fondo de la app */
+  --color-surface: #ffffff;      /* Blanco puro para las "tarjetas" o contenedores */
+  --color-text-main: #333333;    /* Gris muy oscuro para el texto principal (no cansa la vista) */
+  --color-text-muted: #7f8c8d;   /* Gris medio para textos secundarios */
+  --color-border: #dcdfe6;       /* Gris claro para los bordes de los inputs */
+
+  /* Tipografía y Espaciados */
+  --font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  --border-radius: 8px;          /* Redondeo estándar para todo el sistema */
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+}
+
+/* ==========================================
+   RESETEO BÁSICO Y ESTILOS GENERALES
+   ========================================== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--color-background);
+  color: var(--color-text-main);
+  line-height: 1.6;
+}
+
+/* Estilos estandarizados para inputs y botones para toda la app */
+input, select, textarea {
+  font-family: var(--font-family);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  padding: 10px var(--spacing-md);
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+input:focus {
+  border-color: var(--color-primary);
+}
+
+button {
+  font-family: var(--font-family);
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
